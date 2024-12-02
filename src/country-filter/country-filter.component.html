@@ -1,0 +1,11 @@
+
+<h1>Observable approach</h1>
+<input placeholder="filter country"
+[(ngModel)]="filterQuery"
+(ngModelChange)="filter()"
+
+>
+<li *ngFor="let country of filteredCountriesForObservables">{{country}}</li>
+<input placeholder="add country"
+[(ngModel)]="addCountryQuery">
+<button (click)="addCountry()">Add country to the list</button>
