@@ -43,6 +43,7 @@ export class CountryFilterComponent implements OnInit {
                                           .filter(c=>c.toLowerCase().includes(
                                                   this.filterQuery.toLowerCase()));
   }
+  // try do filter with .map().pipe() etc
 
   signalAddCountry()
   {
