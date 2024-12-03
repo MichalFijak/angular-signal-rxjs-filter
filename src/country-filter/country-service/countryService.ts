@@ -1,5 +1,5 @@
-import { Injectable } from "@angular/core";
-import { BehaviorSubject, Subject } from "rxjs";
+import { Injectable, Signal, computed, signal } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({providedIn:"root"})
 export class CountryService
@@ -14,12 +14,25 @@ export class CountryService
       this.baseCountries.push(country);
       this.countriesSubject.next([...this.baseCountries]);
     }
-  
-    getCountry()
-    {
-      return [... this.baseCountries];
-    }
-
     countriesSubject = new BehaviorSubject<string[]>(this.baseCountries);
     countriesObservable= this.countriesSubject.asObservable();
+    
+
+    private readonly signalBaseCountries = signal<string[]>(this.baseCountries);
+
+    getSignalCountries()
+    {
+      return this.signalBaseCountries();
+    }
+
+    signalAddCountry(country:string)
+    {
+      this.baseCountries.push(country)
+      this.signalBaseCountries.set([...this.baseCountries]);
+
+    }
+
+
+    
+
 }

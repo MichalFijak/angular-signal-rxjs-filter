@@ -9,3 +9,15 @@
 <input placeholder="add country"
 [(ngModel)]="addCountryQuery">
 <button (click)="addCountry()">Add country to the list</button>
+<hr>
+
+<h1>Signal approach</h1>
+<input placeholder="filter country"
+[(ngModel)]="signalFilterQuery"
+(ngModelChange)="signalFilter()"
+
+>
+<li *ngFor="let country of baseCountriesForSignal()">{{country}}</li>
+<input placeholder="add country"
+[(ngModel)]="signalAddCountryQuery">
+<button (click)="signalAddCountry()">Add country to the list</button>
