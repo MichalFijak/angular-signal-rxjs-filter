@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CountryService } from './country-service/countryService';
+import { Subscription, filter, map, tap } from 'rxjs';
 
 @Component({
   selector: 'app-country-filter',
@@ -9,24 +10,32 @@ import { CountryService } from './country-service/countryService';
   templateUrl: './country-filter.component.html',
   styleUrl: './country-filter.component.css'
 })
-export class CountryFilterComponent implements OnInit {
+export class CountryFilterComponent implements OnInit, OnDestroy {
+
+  private subscriptions: Subscription = new Subscription();
+
+  filterQuery ="";
+  filterQuery2="";
+  addCountryQuery='';
   baseCountriesForObservables :string[]=[""];
   filteredCountriesForObservables :string[]=[""];
 
   baseCountriesForSignal=signal<string[]>([""]);
-
-  filterQuery ="";
-  addCountryQuery='';
   signalFilterQuery =signal<string>('');
   signalAddCountryQuery=signal<string>('');
+
   constructor(private countryService:CountryService)
-  {
+  {}
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
+
   ngOnInit(): void {
-    this.countryService.countriesObservable.subscribe((countries)=>{
+    this.subscriptions.add(this.countryService.countriesObservable.subscribe((countries)=>{
     this.baseCountriesForObservables=countries
     this.filteredCountriesForObservables=countries;
-    })
+    }))
 
     this.baseCountriesForSignal.set(this.countryService.getSignalCountries());
     
@@ -37,13 +46,22 @@ export class CountryFilterComponent implements OnInit {
     this.countryService.addCountry(this.addCountryQuery);
   }
 
-  filter()
+  filterCountries()
   {
     this.filteredCountriesForObservables=this.baseCountriesForObservables
                                           .filter(c=>c.toLowerCase().includes(
                                                   this.filterQuery.toLowerCase()));
   }
-  // try do filter with .map().pipe() etc
+  filterCountries2()
+  {
+    this.subscriptions.add(this.countryService.countriesObservable.pipe(
+                                        map(countries=>countries.filter(country=>
+                                          country.toLowerCase().includes(this.filterQuery2.toLowerCase()))),
+                                          tap(filteredCountries=>console.log('filteredCountries',filteredCountries)))
+                                          .subscribe(filteredCountries=>this.filteredCountriesForObservables=filteredCountries)
+                          );
+  }
+
 
   signalAddCountry()
   {

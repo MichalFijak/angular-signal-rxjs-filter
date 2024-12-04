@@ -2,7 +2,12 @@
 <h1>Observable approach</h1>
 <input placeholder="filter country"
 [(ngModel)]="filterQuery"
-(ngModelChange)="filter()"
+(ngModelChange)="filterCountries()"
+
+>
+<input placeholder="filter country for observable"
+[(ngModel)]="filterQuery2"
+(ngModelChange)="filterCountries2()"
 
 >
 <li *ngFor="let country of filteredCountriesForObservables">{{country}}</li>
