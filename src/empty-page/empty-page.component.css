@@ -1,0 +1,12 @@
+/* Styling for the welcome paragraph */
+p.welcome-message {
+    color: #6f4e37; /* Coffee bean brown text */
+    background: none; /* No background initially */
+    padding: 20px 30px; /* Generous padding */
+    font-size: 24px; /* Larger font size */
+    font-family: 'Georgia', serif; /* Elegant font family */
+    text-align: center; /* Center the text */
+    margin: 30px auto; /* Center horizontally with more vertical margin */
+    max-width: 80%; /* Limit width for better readability */
+    user-select: none; /* Make text unselectable */
+}

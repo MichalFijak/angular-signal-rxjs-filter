@@ -1,0 +1,46 @@
+/* Base styles for all links */
+a[routerLink] {
+    text-decoration: none; /* Remove underline */
+    color: #fff; /* White text */
+    padding: 12px 24px; /* Generous padding */
+    font-size: 16px; /* Font size */
+    font-family: 'Verdana', sans-serif; /* Font family */
+    transition: all 0.3s ease; /* Smooth transition */
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    border-radius: 8px; /* Rounded corners */
+    background: #6f4e37; /* Darker background by default */
+    box-shadow: inset 4px 4px 8px #553824, inset -4px -4px 8px #8b644e; /* Inset shadow */
+    margin: 8px 0; /* Vertical margin for spacing */
+  }
+  
+  /* Hover effect for links */
+  a[routerLink]:hover {
+    background: #4b382e; /* Darker background on hover */
+    color: #f4e3d7; /* Light coffee cream text */
+    box-shadow: 4px 4px 8px #3a2d26, -4px -4px 8px #5a473a; /* Soft shadow */
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+  
+  /* Active state for links */
+  a[routerLink].active {
+    background-color: #553824; /* Even darker background */
+    color: #f4e3d7; /* Lighter text */
+    border: 2px solid #8b644e; /* Border to highlight active */
+  }
+  
+  /* Focus state for accessibility */
+  a[routerLink]:focus {
+    outline: 2px solid #8b644e; /* Focus outline */
+    outline-offset: 2px; /* Space between outline and link */
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 600px) {
+    a[routerLink] {
+      font-size: 14px; /* Smaller font size on mobile */
+      padding: 10px 20px; /* Adjust padding on mobile */
+    }
+  }
+  
