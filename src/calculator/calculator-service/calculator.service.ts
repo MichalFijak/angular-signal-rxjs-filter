@@ -20,7 +20,7 @@ export class CalculatorService
       private exchangeRatesObservable:Observable<ExchangeRates> = of(this.exchangeRates);
       
       
-      // to check initial value, implement interval 
+      // to check initial value, implement interval so it behave like long respond from the server
 
       private exchangeRateToSignal = toSignal(this.exchangeRatesObservable,
                                     {initialValue:
