@@ -1,5 +1,7 @@
 import { Observable, of } from "rxjs";
 import {toSignal} from "@angular/core/rxjs-interop"
+import { Injectable } from "@angular/core";
+@Injectable({providedIn:'root'})
 export class CalculatorService
 {
     private readonly exchangeRates: ExchangeRates = {
@@ -36,7 +38,7 @@ export class CalculatorService
       }
 }
 
-interface ExchangeRates {
+export interface ExchangeRates {
     [key: string]: {
       [key: string]: number;
     };

@@ -10,7 +10,6 @@
 <span>Enter amount: </span>
 <input placeholder="amount of money"
 [(ngModel)]="amountOfMoney"
-(ngModelChange)="calculateMoney()"
 >
 <div>Choose currency you want to exchange to
     <select
@@ -22,4 +21,4 @@
     </select>
 </div>
 
-<div>Your exchanged money: {{calculatedAmountOfMoney}}</div>
+<div>Your exchanged money: {{calculatedAmountOfMoney()}}</div>
