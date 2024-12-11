@@ -11,9 +11,9 @@ import { CalculatorService, ExchangeRates } from './calculator-service/calculato
 export class CalculatorComponent implements OnInit{
 
   // import value from signal and bind it here as a initial values
-  amountOfMoney :string='';
-  selectedCurrency:string="USD";
-  selectedCurrencyToExchange:string="PLN";
+  amountOfMoney =signal<string>("1");
+  selectedCurrency=signal<string>("USD");
+  selectedCurrencyToExchange=signal<string>("PLN");
   exchangeRate=1.5;
   
   exchangeRates !: Signal<ExchangeRates>;
@@ -26,22 +26,25 @@ export class CalculatorComponent implements OnInit{
 
     computedExchangeRate = computed(()=>{
       const rates = this.exchangeRates();
-      const currency = signal<string>(this.selectedCurrency)
-      const currencyToExchange= signal<string>(this.selectedCurrencyToExchange);
 
-      if(currency() in rates && currencyToExchange() in rates[currency()])
+      if(this.selectedCurrency() in rates &&
+       this.selectedCurrencyToExchange() in rates[this.selectedCurrency()])
       {
-        return rates[currency()][currencyToExchange()]
+        return rates[this.selectedCurrency()][this.selectedCurrencyToExchange()]
       }
       else{
-        return 0
+        return 1
       }
     }
     )
-    
-
+       
     // its not calculating automatically
     calculatedAmountOfMoney = computed(() => {
-       return this.computedExchangeRate() * +this.amountOfMoney; })
+      return this.computedExchangeRate() * +this.amountOfMoney(); },
+      );
 
+    
+            
+    
 }
+
