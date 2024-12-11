@@ -1,0 +1,69 @@
+/* General page styling */
+body {
+    font-family: 'Georgia', serif;
+    background-color: #f0ebe1; /* Soft beige background */
+    color: #4f3b2b; /* Earthy brown text */
+    padding: 20px;
+  }
+  
+  /* Heading styles */
+  h2 {
+    color: #4f3b2b; /* Earthy brown text */
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Table container */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-family: 'Georgia', serif;
+    background-color: #fff; /* White background for contrast */
+  }
+  
+  /* Table header */
+  th {
+    background-color: #8c6d5a; /* Warm tan background */
+    color: #fff; /* White text */
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd; /* Light border */
+    font-size: 18px;
+  }
+  
+  /* Table rows */
+  tr {
+    border-bottom: 1px solid #ddd; /* Light border for rows */
+  }
+  
+  /* Table cells */
+  td {
+    padding: 10px;
+    border: 1px solid #ddd; /* Light border */
+    color: #4f3b2b; /* Earthy brown text */
+    font-size: 16px; /* Larger text size for better readability */
+  }
+  
+  /* Alternate row background */
+  tr:nth-child(even) {
+    background-color: #e6dcd2; /* Light tan background for alternate rows */
+  }
+  
+  /* Table row hover effect */
+  tr:hover {
+    background-color: rgba(111, 78, 55, 0.5); /* Stronger warm tan background on hover */
+  }
+  
+  /* Image styling */
+  td img {
+    max-width: 100px; /* Limit image size */
+    border-radius: 8px; /* Rounded corners for images */
+  }
+  
+  /* Focus styles for accessibility */
+  td:focus, th:focus {
+    outline: 2px solid #4f3b2b; /* Earthy brown outline for focus */
+    outline-offset: 2px;
+  }
+  

@@ -22,6 +22,7 @@ export class CalculatorComponent implements OnInit{
   }
   ngOnInit(): void {
     this.exchangeRates=this.calculatorService.getExchangeRate()
+    console.log(this.exchangeRates())
   }
 
     computedExchangeRate = computed(()=>{
@@ -37,9 +38,7 @@ export class CalculatorComponent implements OnInit{
       }
     }
     )
-       
-    // its not calculating automatically
-    calculatedAmountOfMoney = computed(() => {
+           calculatedAmountOfMoney = computed(() => {
       return this.computedExchangeRate() * +this.amountOfMoney(); },
       );
 
