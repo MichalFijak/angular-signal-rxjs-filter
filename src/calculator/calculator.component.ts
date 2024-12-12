@@ -10,7 +10,6 @@ import { CalculatorService, ExchangeRates } from './calculator-service/calculato
 })
 export class CalculatorComponent implements OnInit{
 
-  // import value from signal and bind it here as a initial values
   amountOfMoney =signal<string>("1");
   selectedCurrency=signal<string>("USD");
   selectedCurrencyToExchange=signal<string>("PLN");
@@ -22,7 +21,6 @@ export class CalculatorComponent implements OnInit{
   }
   ngOnInit(): void {
     this.exchangeRates=this.calculatorService.getExchangeRate()
-    console.log(this.exchangeRates())
   }
 
     computedExchangeRate = computed(()=>{

@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Signal, signal } from '@angular/core';
 import { MusicInfo } from './music-info';
 import { CommonModule } from '@angular/common';
+import { MusicShopService } from './music-shop-service/music-shop.service';
+import { MusicDiskComponent } from './music-disk/music-disk.component';
 
 @Component({
   selector: 'app-music-shop',
-  imports: [CommonModule],
+  imports: [CommonModule,MusicDiskComponent],
   template: `
   <div>
+  <span>Current currency: {{currency()}}</span>
       <table>
       <tr>
           <th>
@@ -22,7 +25,7 @@ import { CommonModule } from '@angular/common';
               Price
           </th>
       </tr>
-      <tr *ngFor="let musicInfo of musicInfos">
+      <tr *ngFor="let musicInfo of musicInfos()" (click)="choose(musicInfo)">
         <td>
           {{musicInfo.artist}}
         </td>
@@ -33,56 +36,44 @@ import { CommonModule } from '@angular/common';
           {{musicInfo.picture}}
         </td>
         <td>
-          {{musicInfo.price}}:{{musicInfo.currency}}
+          {{musicInfo.price}}
       </td>
       </tr>
-
       </table>
   </div>
   <hr>
-  
-  <p>Your actual chosen disk!</p>
+  <app-music-disk [musicInfo]="musicInfo()"></app-music-disk>
   `,
   
   styleUrl: './music-shop.component.css'
 })
-export class MusicShopComponent {
-
-
-  // this should end in service
-  public readonly musicInfos:MusicInfo[] =
-  [
-    {
-    id:1,
-    artist:'artist1',
-    albumName:'albumName1',
-    picture:"albumPicture1",
+export class MusicShopComponent implements OnInit {
+  currency = signal("USD");
+  musicInfos!:Signal<MusicInfo[]>;
+  musicInfo = signal<MusicInfo>(
+  {
+    id:0,
+    artist:'artist0',
+    albumName:'albumName0',
+    picture:"albumPicture0",
     price:20,
-    currency:'USD',
-  },
+  })
+  //if not choosen should show nothing as initial value
+  constructor(private musicShopServcie: MusicShopService)
   {
-    id:2,
-    artist:'artist2',
-    albumName:'albumName2',
-    picture:"albumPicture2",
-    price:12,
-    currency:'EUR',
-
-  },
-  {
-    id:3,
-    artist:'artist3',
-    albumName:'albumName3',
-    picture:"albumPicture3",
-    price:7,
-    currency:'GBP',
 
   }
-  ]
-  choose()
+
+  ngOnInit(): void {
+    this.musicInfos=this.musicShopServcie.getMusicInfo();
+  }
+
+
+
+  
+  choose(musicInfoFromArray:MusicInfo)
   {
-    // heree we will chose the disk and send id of it to service in which we will
-    // send what we should display in bigger table
+    this.musicInfo.set(musicInfoFromArray);
   }
 }
 

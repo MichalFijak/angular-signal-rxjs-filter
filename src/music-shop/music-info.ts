@@ -5,6 +5,4 @@ export interface MusicInfo
   albumName:string,
   picture:string,
   price:number,
-  currency:string,
-
 }
