@@ -6,7 +6,7 @@ import { MusicDiskComponent } from './music-disk/music-disk.component';
 
 @Component({
   selector: 'app-music-shop',
-  imports: [CommonModule,MusicDiskComponent],
+  imports: [CommonModule,MusicDiskComponent,MusicDiskComponent],
   template: `
   <div>
   <span>Current currency: {{currency()}}</span>
@@ -42,12 +42,16 @@ import { MusicDiskComponent } from './music-disk/music-disk.component';
       </table>
   </div>
   <hr>
-  <app-music-disk [musicInfo]="musicInfo()"></app-music-disk>
+
+  {{currencyChange}}
+  <hr>
+  <app-music-disk [musicInfo]="musicInfo()" (selectCurrency)="currencyChanged($event)"></app-music-disk>
   `,
   
   styleUrl: './music-shop.component.css'
 })
 export class MusicShopComponent implements OnInit {
+  currencyChange='';
   currency = signal("USD");
   musicInfos!:Signal<MusicInfo[]>;
   musicInfo = signal<MusicInfo>(
@@ -74,6 +78,10 @@ export class MusicShopComponent implements OnInit {
   choose(musicInfoFromArray:MusicInfo)
   {
     this.musicInfo.set(musicInfoFromArray);
+  }
+  currencyChanged(newCurrency:string)
+  {
+    this.currencyChange=newCurrency;
   }
 }
 
