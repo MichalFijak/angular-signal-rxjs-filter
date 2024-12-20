@@ -6,6 +6,7 @@ import { MusicDiskComponent } from './music-disk/music-disk.component';
 
 @Component({
   selector: 'app-music-shop',
+  standalone:true,
   imports: [CommonModule,MusicDiskComponent,MusicDiskComponent],
   template: `
   <div>

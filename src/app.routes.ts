@@ -2,7 +2,6 @@ import { Routes } from "@angular/router";
 import { CountryFilterComponent } from "./country-filter/country-filter.component";
 import { CalculatorComponent } from "./calculator/calculator.component";
 import { EmptyPageComponent } from "./empty-page/empty-page.component";
-import { MusicShopComponent } from "./music-shop/music-shop.component";
 
 export const appRoutes:Routes=[
     {
@@ -17,7 +16,7 @@ export const appRoutes:Routes=[
     },
     {
         path:'music-shop',
-        component:MusicShopComponent,
+        loadComponent: ()=>import('./music-shop/music-shop.component').then(m=>m.MusicShopComponent),
         title: 'Music shop!'
     },
     {
