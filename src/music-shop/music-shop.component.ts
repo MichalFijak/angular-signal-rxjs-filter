@@ -1,8 +1,10 @@
 import { Component, OnInit, Signal, signal } from '@angular/core';
 import { MusicInfo } from './music-info';
 import { CommonModule } from '@angular/common';
-import { MusicShopService } from './music-shop-service/music-shop.service';
+import { CurrencyForMusic, MusicShopService } from './music-shop-service/music-shop.service';
 import { MusicDiskComponent } from './music-disk/music-disk.component';
+import { reduce } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-music-shop',
@@ -63,6 +65,7 @@ export class MusicShopComponent implements OnInit {
     picture:"albumPicture0",
     price:20,
   })
+  currencyForMusic!:Signal<CurrencyForMusic>
   //if not choosen should show nothing as initial value
   constructor(private musicShopServcie: MusicShopService)
   {
@@ -71,8 +74,9 @@ export class MusicShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.musicInfos=this.musicShopServcie.getMusicInfo();
+    this.currencyForMusic=toSignal(this.musicShopServcie.getExchangeRateForMusic(), { initialValue: { USD: 1, EUR: 0.95, GBP: 2 } });
   }
-
+  
 
 
   
@@ -84,6 +88,8 @@ export class MusicShopComponent implements OnInit {
   {
     this.currencyChange=newCurrency;
   }
+
+
 }
 
 
