@@ -1,15 +1,13 @@
 import { Component, OnInit, Signal, signal } from '@angular/core';
 import { MusicInfo } from './music-info';
 import { CommonModule } from '@angular/common';
-import { CurrencyForMusic, MusicShopService } from './music-shop-service/music-shop.service';
+import { MusicShopService } from './music-shop-service/music-shop.service';
 import { MusicDiskComponent } from './music-disk/music-disk.component';
-import { reduce } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { LimitDecimalPipe } from '../pipe/limit-decimal.pipe';
 
 @Component({
   selector: 'app-music-shop',
-  standalone:true,
-  imports: [CommonModule,MusicDiskComponent,MusicDiskComponent],
+  imports: [CommonModule,MusicDiskComponent,MusicDiskComponent,LimitDecimalPipe],
   template: `
   <div>
   <span>Current currency: {{currency()}}</span>
@@ -39,14 +37,12 @@ import { toSignal } from '@angular/core/rxjs-interop';
           {{musicInfo.picture}}
         </td>
         <td>
-          {{musicInfo.price}}
+          {{musicInfo.price | limitDecimal:2}}
       </td>
       </tr>
       </table>
   </div>
   <hr>
-
-  {{currencyChange}}
   <hr>
   <app-music-disk [musicInfo]="musicInfo()" (selectCurrency)="currencyChanged($event)"></app-music-disk>
   `,
@@ -54,7 +50,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
   styleUrl: './music-shop.component.css'
 })
 export class MusicShopComponent implements OnInit {
-  currencyChange='';
   currency = signal("USD");
   musicInfos!:Signal<MusicInfo[]>;
   musicInfo = signal<MusicInfo>(
@@ -65,8 +60,6 @@ export class MusicShopComponent implements OnInit {
     picture:"albumPicture0",
     price:20,
   })
-  currencyForMusic!:Signal<CurrencyForMusic>
-  //if not choosen should show nothing as initial value
   constructor(private musicShopServcie: MusicShopService)
   {
 
@@ -74,9 +67,8 @@ export class MusicShopComponent implements OnInit {
 
   ngOnInit(): void {
     this.musicInfos=this.musicShopServcie.getMusicInfo();
-    this.currencyForMusic=toSignal(this.musicShopServcie.getExchangeRateForMusic(), { initialValue: { USD: 1, EUR: 0.95, GBP: 2 } });
   }
-  
+
 
 
   
@@ -86,10 +78,9 @@ export class MusicShopComponent implements OnInit {
   }
   currencyChanged(newCurrency:string)
   {
-    this.currencyChange=newCurrency;
+    this.currency.set(newCurrency);
+    this.musicShopServcie.changeCurrency(newCurrency);
   }
-
-
 }
 
 

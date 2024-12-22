@@ -1,20 +1,10 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, computed, signal } from "@angular/core";
 import { MusicInfo } from "../music-info";
-import { HttpClient } from "@angular/common/http";
-import { Observable, of } from "rxjs";
 
 @Injectable({providedIn:'root'})
 export class MusicShopService
 {
-
-  private readonly apiUrl = 'api/currency'
-  private readonly currencyForMusic =
-{
-  USD:1,
-  EUR:0.95,
-  GBP:2,
-}
-  
+  private exchangeRate = signal<number>(3)
   private readonly musicInfos:MusicInfo[] =
   [
     {
@@ -44,24 +34,33 @@ export class MusicShopService
 
     private readonly musicInfosSignal = signal<MusicInfo[]>(this.musicInfos)
 
-    getExchangeRateForMusic(): Observable<CurrencyForMusic>
-    {
-      return of(this.currencyForMusic);
-    }
-
     getMusicInfo()
     {   
         return this.musicInfosSignal;
+        
     }
 
-    changeCurrency()
+    changeCurrency(newCurrency:string)
     {
-      console.log()
+      const exchangedCurrency = this.getEnumValue(newCurrency);
+      this.exchangeRate.set(exchangedCurrency);
+      this.musicInfosSignal.set(computed(()=>this.musicInfosSignal().map(element => {
+        return {...element, price:element.price = element.price*this.exchangeRate()}
+      }))())
+    }
+
+    private getEnumValue(currency:string):number{
+      if(currency as keyof typeof CurrencyForMusic)
+      {
+      return CurrencyForMusic[currency as keyof typeof CurrencyForMusic];
+      }
+      return 1;
     }
 }
-
-
-export type CurrencyForMusic = Record<Currency,number>
-
-export type Currency = 
-  'USD' | 'EUR' | 'GBP'
+// find this cool way in which guy from angular fix this problem
+export enum CurrencyForMusic
+{
+  USD=1,
+  EUR=0.95,
+  GBP=2,
+}
