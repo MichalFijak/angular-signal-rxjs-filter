@@ -57,7 +57,7 @@ export class MusicShopService
       return 1;
     }
 }
-// find this cool way in which guy from angular fix this problem
+// find this cool way in which guy from angular fix this problem -Record
 export enum CurrencyForMusic
 {
   USD=1,

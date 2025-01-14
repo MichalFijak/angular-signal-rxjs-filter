@@ -3,10 +3,11 @@ import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CountryService } from './country-service/countryService';
 import { Subscription, filter, map, tap } from 'rxjs';
+import { CountryFormatterPipe } from '../pipe/country-formatter.pipe';
 
 @Component({
   selector: 'app-country-filter',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,CountryFormatterPipe],
   templateUrl: './country-filter.component.html',
   styleUrl: './country-filter.component.css'
 })
