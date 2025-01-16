@@ -1,3 +1,4 @@
+import { NonNullAssert } from '@angular/compiler';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -10,21 +11,25 @@ export class CountryFormatterPipe implements PipeTransform {
   transform(value: string, filter:string): SafeHtml {
     let lowerCasedValue = value.toLowerCase();
     let lowerCasedFilter=filter.toLowerCase();
+    let indexMatcher =0;
+
     if(filter.length>0)
     {
-
     let formattedValue='';
     let index  = lowerCasedValue.indexOf(lowerCasedFilter);
     let beforeMatch = lowerCasedValue.substring(0,index);
     let afterMatch = lowerCasedValue.substring(lowerCasedFilter.length+index);
 
-    formattedValue += beforeMatch[0].toUpperCase() + beforeMatch.substring(1);
-    let splittedWords=lowerCasedValue.split('');
+      if(beforeMatch.length>0)
+      {
+        formattedValue += beforeMatch[0].toUpperCase() + beforeMatch.substring(1);
+      }
 
-    if(index===0 || index=== splittedWords.indexOf(' ')+1)
+    let splittedWords=lowerCasedValue.split(' ');
+
+    if(index===0 )
     {
       formattedValue +='<strong>'+lowerCasedFilter.toLocaleUpperCase()+'</strong>';
-
     }
     else
     {
