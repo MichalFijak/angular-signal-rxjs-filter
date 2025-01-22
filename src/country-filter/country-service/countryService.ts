@@ -6,7 +6,7 @@ export class CountryService
 {
     private readonly baseCountries :string[] =
     [
-      "Deutschland", "Slovenia", "Slovakia","Poland","France","Espania"
+      "Deutschland", "Slovenia", "Slovakia","Poland","France","Espania","Czech Republic","United Emirates"
     ]
   
     addCountry(country:string)
