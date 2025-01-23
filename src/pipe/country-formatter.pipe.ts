@@ -1,3 +1,4 @@
+import { LowerCasePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -13,43 +14,33 @@ export class CountryFormatterPipe implements PipeTransform {
       return value;
     }
 
-    let lowerCasedValue = value.toLowerCase();
-    let lowerCasedFilter = filter.toLowerCase();
+    const phrase = filter.toLowerCase();
+    const regex = new RegExp(`(${phrase})`, 'i');
+    
+    const words = value.split(' ');
 
-    let formattedValue='';
-    let filterIndex  = lowerCasedValue.indexOf(lowerCasedFilter);
-    let beforeMatch = lowerCasedValue.substring(0,filterIndex);
-    let afterMatch = lowerCasedValue.substring(lowerCasedFilter.length+filterIndex);
-
-    /// 1) Case when filtered string is in middle of word
-    if(beforeMatch.length>0)
-    {
-      formattedValue += beforeMatch[0].toUpperCase() + beforeMatch.substring(1);
-    }
-      /// case for words like Czech Republic
-    let splittedWords=lowerCasedValue.split(' ');
-    splittedWords.forEach((word,index)=>{
-      if(word.includes(lowerCasedFilter) && index>=0)
-      {
-        /// if filteredIndex ===0 || filteredIndex ===word.length
-        /// + index then upperCase() charAt[0]
-        console.log('iteration:',index,word.length)
-        if(filterIndex===0 || filterIndex===word.length)
-        {
-          formattedValue+='<strong>'+ word.charAt(filterIndex).toUpperCase() + lowerCasedFilter.substring(filterIndex+1) + '</strong>'
-
-        }
-        else
-        {
-          formattedValue+='<strong>'+ lowerCasedFilter.charAt(0).toUpperCase() + '</strong>'
-        }
+    const highlightedWords = words.map(word => {
+      const lowerWord = word.toLowerCase();
+      if (lowerWord.includes(phrase)) {
+        const formattedWord = word.replace(regex, (match, p1, offset) => {
+          if (offset === 0) {
+            return `<strong>${match.charAt(0).toUpperCase()}${match.slice(1)}</strong>`;
+          }
+          return `<strong>${match}</strong>`;
+        });
+        return formattedWord;
+      } else {
+        return this.capitalizeFirstLetter(word);
       }
-    })
+    });
 
-    formattedValue += afterMatch;
-
-    return this.sanitizer.bypassSecurityTrustHtml(formattedValue);
-
+    const sanitizedCountry = highlightedWords.join(' ');
+    return this.sanitizer.bypassSecurityTrustHtml(sanitizedCountry);
   }
-
+  
+      private capitalizeFirstLetter(text: string): string {
+        return text.charAt(0).toUpperCase() + text.slice(1)
+      }
 }
+
+
