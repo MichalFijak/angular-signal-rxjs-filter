@@ -20,8 +20,8 @@
 <input placeholder="filter country"
 [(ngModel)]="signalFilterQuery"
 (ngModelChange)="signalFilter()"
-
 >
+<!-- try to apply filter for signals -->
 <li *ngFor="let country of baseCountriesForSignal()">{{country}}</li>
 <input placeholder="add country"
 [(ngModel)]="signalAddCountryQuery">
