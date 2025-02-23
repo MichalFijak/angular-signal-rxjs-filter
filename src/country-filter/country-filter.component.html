@@ -10,7 +10,7 @@
 (ngModelChange)="filterCountries2()"
 
 >
-<li *ngFor="let country of filteredCountriesForObservables" [innerHTML]="country | countryFormatter:filterQuery"></li>
+<li *ngFor="let country of filteredCountriesForObservables" [innerHTML]="country | secondCountryFilter:filterQuery"></li>
 <input placeholder="add country"
 [(ngModel)]="addCountryQuery">
 <button (click)="addCountry()">Add country to the list</button>
