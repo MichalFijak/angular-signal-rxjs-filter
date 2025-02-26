@@ -22,7 +22,7 @@
 (ngModelChange)="signalFilter()"
 >
 <!-- try to apply filter for signals -->
-<li *ngFor="let country of baseCountriesForSignal()">{{country}}</li>
+<li *ngFor="let country of baseCountriesForSignal()" [innerHTML]="country | secondCountryFilter:signalFilterQuery()"></li>
 <input placeholder="add country"
 [(ngModel)]="signalAddCountryQuery">
 <button (click)="signalAddCountry()">Add country to the list</button>

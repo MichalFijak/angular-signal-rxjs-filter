@@ -9,20 +9,35 @@ export class SecondCountryFilterPipe implements PipeTransform {
   constructor(private sanitizer:DomSanitizer){}
 
   transform(value: string, filter :string): SafeHtml {
-    if(!(filter.length>0) || filter ===null)
+
+    if(!(filter.length>0) ||!filter)
     {
       return value;
     }
-    var lowerCasedValue= value.toLowerCase();
-    var lowerCasedFilter = filter.toLowerCase();
+    const lowerCaseValue = value.toLowerCase();
+    const lowerCaseFilter = filter.toLowerCase();
+    const index = lowerCaseValue.indexOf(lowerCaseFilter);
 
-    var index = lowerCasedValue.indexOf(lowerCasedFilter);
-    var beforeMatch = value.substring(0,index);
-    var afterMatch = value.substring(index+filter.length,value.length);
-    var filteredSubstring =filter.substring(1,filter.length);
-    
-    var concatValue = beforeMatch + '<strong>'+value[index]+filteredSubstring+'</strong>' + afterMatch;
-    return this.sanitizer.bypassSecurityTrustHtml(concatValue);
+    const beforeMatch = value.substring(0,index);
+    const match = '<strong>'+value.substring(index,index+filter.length)+'</strong>';
+    const afterMatch = value.substring(index+filter.length);
+
+    const finalValue = beforeMatch+match+afterMatch;
+    return this.sanitizer.bypassSecurityTrustHtml(finalValue)
   }
-
 }
+
+// {
+
+//   const regex = new RegExp(`(${filter})`, 'i');
+//   const match = value.match(regex);
+  
+  
+//   if (match) {
+//     const index = match.index as number;
+//     return this.sanitizer.bypassSecurityTrustHtml(value.substring(0, index) + '<strong>' + value.substring(index, index + filter.length) + '</strong>' + value.substring(index + filter.length));
+//   }
+
+//   return value;
+
+// }
