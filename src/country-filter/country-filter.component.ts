@@ -58,8 +58,7 @@ export class CountryFilterComponent implements OnInit, OnDestroy {
   {
     this.subscriptions.add(this.countryService.countriesObservable.pipe(
                                         map(countries=>countries.filter(country=>
-                                          country.toLowerCase().includes(this.filterQuery2.toLowerCase()))),
-                                          tap(filteredCountries=>console.log('filteredCountries',filteredCountries)))
+                                          country.toLowerCase().includes(this.filterQuery2.toLowerCase()))))
                                           .subscribe(filteredCountries=>this.filteredCountriesForObservables=filteredCountries)
                           );
   }

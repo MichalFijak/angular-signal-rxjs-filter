@@ -20,6 +20,11 @@ export const appRoutes:Routes=[
         title: 'Music shop!'
     },
     {
+        path:'quiz',
+        loadComponent:()=>import('./quiz/quiz.component').then(q=>q.QuizComponent),
+        title:'Quiz!'
+    },
+    {
         path:'',
         component:EmptyPageComponent,
         title: 'Home!'

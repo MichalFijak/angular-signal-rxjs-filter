@@ -1,0 +1,6 @@
+<ul *ngFor="let question of quizQuestions()">
+    {{question.question}}
+    <button *ngFor="let answer of question.answerModel">
+        {{answer.answer}}
+    </button>
+</ul>
