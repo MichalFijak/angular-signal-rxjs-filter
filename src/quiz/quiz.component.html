@@ -1,6 +1,6 @@
 <ul *ngFor="let question of quizQuestions()">
     {{question.question}}
-    <button *ngFor="let answer of question.answerModel">
+    <span class="button" *ngFor="let answer of question.answerModel" (click)="choosenAnswer(question,answer)">
         {{answer.answer}}
-    </button>
+    </span>
 </ul>
