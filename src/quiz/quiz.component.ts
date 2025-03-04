@@ -21,23 +21,21 @@ export class QuizComponent {
   }
 
   protected choosenAnswer(question:QuizModel,answer:AnswerModel)
-  {
-    this.isChecked!=this.isChecked;
-    
-    // let quizModel = this.quizQuestions().map((q)=>{
-    //   if(q.questionId === question.questionId)
-    //   {
-    //     return {
-    //       ...q,
-    //       answerModel:q.answerModel.map((a)=>
-    //       a.answerId===answer.answerId? {...a, isChecked:this.isChecked}:a)
-    //     };
-    //   };
-    //   return q;
-    // })
-    
-      //console.log(quizModel)
-    //this.quizQuestions.update(()=>questionNumber)
+  {    
+    let quizModel = this.quizQuestions().map((q)=>{
+      if (q.questionId === question.questionId) {
+        return {
+          ...q,
+          answerModel: q.answerModel.map((a) =>
+            a.answerId === answer.answerId ?
+             { ...a, ...answer, isChecked: !a.isChecked } : a
+          )
+        };
+      };
+      return q;
+    })
+
+    this.quizQuestions.update(()=>quizModel)
     // update boolean inside answerModel quiz = ()=>computed...
   }
 
