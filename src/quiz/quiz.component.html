@@ -1,6 +1,7 @@
 <ul *ngFor="let question of quizQuestions()">
     {{question.question}}
-    <span class="button" *ngFor="let answer of question.answerModel" (click)="choosenAnswer(question,answer)">
+    <span class="button" [ngClass]="{'checked':answer.isChecked}" *ngFor="let answer of question.answerModel" (click)="choosenAnswer(question,answer)">
         {{answer.answer}}
     </span>
 </ul>
+<span class="button" (click)="submitAnswers()">Submit asnwers</span>

@@ -3,7 +3,6 @@ import { QuizService } from './quiz.service';
 import { CommonModule } from '@angular/common';
 import { QuizModel } from './models/quiz-model';
 import { AnswerModel } from './models/answer-model';
-import { filter, find } from 'rxjs';
 
 @Component({
   selector: 'app-quiz',
@@ -28,7 +27,7 @@ export class QuizComponent {
           ...q,
           answerModel: q.answerModel.map((a) =>
             a.answerId === answer.answerId ?
-             { ...a, ...answer, isChecked: !a.isChecked } : a
+             { ...a, ...answer, isChecked: !a.isChecked } : { ...a, isChecked: false }
           )
         };
       };
@@ -36,7 +35,21 @@ export class QuizComponent {
     })
 
     this.quizQuestions.update(()=>quizModel)
-    // update boolean inside answerModel quiz = ()=>computed...
+  }
+
+  protected submitAnswers()
+  {
+    let countCorrectAnswers = 0;
+    this.quizQuestions().forEach((q)=>{
+      q.answerModel.forEach((a)=>{
+        if(a.isChecked=== true &&a.isCorrect===true)
+        {
+          countCorrectAnswers++
+        }
+      })
+    })
+    console.log(`The user got ${countCorrectAnswers} correct answers.`);
+    // dispaly it in template, also make another ngClass to show correct answers
   }
 
 }

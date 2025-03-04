@@ -16,3 +16,7 @@
   .button:hover {
     background-color: #443024;
   }
+  .checked
+  {
+    background-color:#c9550c;
+  }
