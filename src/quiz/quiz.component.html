@@ -4,4 +4,7 @@
         {{answer.answer}}
     </span>
 </ul>
+<div>
 <span class="button" (click)="submitAnswers()">Submit asnwers</span>
+<span [ngClass]="{'display-score':!enableScore}">{{score |limitDecimal}}%</span>
+</div>

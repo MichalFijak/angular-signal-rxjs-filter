@@ -3,17 +3,19 @@ import { QuizService } from './quiz.service';
 import { CommonModule } from '@angular/common';
 import { QuizModel } from './models/quiz-model';
 import { AnswerModel } from './models/answer-model';
+import { LimitDecimalPipe } from '../pipe/limit-decimal.pipe';
 
 @Component({
   selector: 'app-quiz',
-  imports: [CommonModule],
+  imports: [CommonModule,LimitDecimalPipe],
   templateUrl: './quiz.component.html',
   styleUrl: './quiz.component.css'
 })
 export class QuizComponent {
 
   protected readonly quizQuestions= signal<QuizModel[]>([{question:'',answerModel:[],questionId:0}]);
-  protected isChecked=false;
+  protected score!:number;
+  protected enableScore=false;
   constructor(private quizService: QuizService)
   {
     this.quizQuestions.set(this.quizService.getQuestions().quiz);
@@ -40,16 +42,24 @@ export class QuizComponent {
   protected submitAnswers()
   {
     let countCorrectAnswers = 0;
+    let answersCount=0;
     this.quizQuestions().forEach((q)=>{
       q.answerModel.forEach((a)=>{
         if(a.isChecked=== true &&a.isCorrect===true)
         {
           countCorrectAnswers++
         }
+        if(a.isCorrect)
+        {
+          answersCount+=1;
+        }
+
       })
-    })
-    console.log(`The user got ${countCorrectAnswers} correct answers.`);
-    // dispaly it in template, also make another ngClass to show correct answers
+    })    
+    this.score = (countCorrectAnswers/answersCount)*100;
+    this.enableScore=true;
+
+    // if user choosed wrong answer it should be marked as red, and the correct one should be green
   }
 
 }
