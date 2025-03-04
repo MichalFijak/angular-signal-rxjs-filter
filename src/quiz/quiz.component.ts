@@ -3,6 +3,7 @@ import { QuizService } from './quiz.service';
 import { CommonModule } from '@angular/common';
 import { QuizModel } from './models/quiz-model';
 import { AnswerModel } from './models/answer-model';
+import { filter, find } from 'rxjs';
 
 @Component({
   selector: 'app-quiz',
@@ -21,11 +22,22 @@ export class QuizComponent {
 
   protected choosenAnswer(question:QuizModel,answer:AnswerModel)
   {
-    let questionNumber =this.quizQuestions().filter(
-                        value=>value.questionId==question.questionId)[0]
-                        .answerModel.filter(a=>a.answerId==answer.answerId);
-    console.log(questionNumber);
-
+    this.isChecked!=this.isChecked;
+    
+    // let quizModel = this.quizQuestions().map((q)=>{
+    //   if(q.questionId === question.questionId)
+    //   {
+    //     return {
+    //       ...q,
+    //       answerModel:q.answerModel.map((a)=>
+    //       a.answerId===answer.answerId? {...a, isChecked:this.isChecked}:a)
+    //     };
+    //   };
+    //   return q;
+    // })
+    
+      //console.log(quizModel)
+    //this.quizQuestions.update(()=>questionNumber)
     // update boolean inside answerModel quiz = ()=>computed...
   }
 
