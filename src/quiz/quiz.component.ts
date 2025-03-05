@@ -14,7 +14,7 @@ import { LimitDecimalPipe } from '../pipe/limit-decimal.pipe';
 export class QuizComponent {
 
   protected readonly quizQuestions= signal<QuizModel[]>([{question:'',answerModel:[],questionId:0}]);
-  protected score!:number;
+  protected score=0;
   protected enableScore=false;
   constructor(private quizService: QuizService)
   {
@@ -29,7 +29,8 @@ export class QuizComponent {
           ...q,
           answerModel: q.answerModel.map((a) =>
             a.answerId === answer.answerId ?
-             { ...a, ...answer, isChecked: !a.isChecked } : { ...a, isChecked: false }
+             { ...a, ...answer, isChecked: !a.isChecked } :
+              { ...a, isChecked: false }
           )
         };
       };
@@ -58,8 +59,30 @@ export class QuizComponent {
     })    
     this.score = (countCorrectAnswers/answersCount)*100;
     this.enableScore=true;
-
-    // if user choosed wrong answer it should be marked as red, and the correct one should be green
   }
+  protected resetQuiz()
+  {
+    this.score=0
+    this.enableScore=false;
+    this.resetChecks();
+  }
+  protected resetChecks()
+  {
+    let quizModel = this.quizQuestions().map((q)=>
+    {
+      return {
+        ...q,
+        answerModel:  q.answerModel.map((a)=>
+        {
+          return {
+            ...a, isChecked:false
+          }
+        })
 
+      }
+
+    })
+    this.quizQuestions.update(()=>quizModel)
+
+  }
 }
