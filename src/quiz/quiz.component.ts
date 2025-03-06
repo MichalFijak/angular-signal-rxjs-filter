@@ -13,6 +13,8 @@ import { AnswerModel } from './models/answer-model';
 })
 export class QuizComponent {
 
+  protected score=0;
+  protected isSubmitted=false;
   protected quizQuestions = signal<QuizModel[]>([{question:'',answerModel:[],questionId:0}])
   constructor(private quizService: QuizService)
   {
@@ -21,21 +23,68 @@ export class QuizComponent {
 
   getAnswer(question:QuizModel,answer:AnswerModel)
   {
-    console.log(question,answer);
     let answerModel = this.quizQuestions().map((q)=>
     {
       if(q.questionId===question.questionId)
       {
-        q.answerModel.map((a)=>
+        return {
+        ...q,
+        answerModel: q.answerModel.map((a)=>
         {
-          return {...q, ...answer,isChecked:!a.isChecked}
+          if(answer.answerId===a.answerId){
+            return {...a,isChecked:!a.isChecked}
+
+          }
+          return {...a,isChecked:false};
         })
-        console.log(q)
       }
+    }
       return q;
     })
-
     this.quizQuestions.update(()=>answerModel)
   }
 
+  protected submitAnswers()
+  {
+    this.isSubmitted=true;
+    let goodAnswerCount=0;
+    let totalAnswers=0;
+    this.quizQuestions().forEach((q)=>
+    {
+      q.answerModel.forEach((a)=>
+      {
+        if(a.isChecked===true &&a.isCorrect==true)
+        {
+          goodAnswerCount++;
+        }
+        if(a.isCorrect===true)
+        {
+        totalAnswers++;
+        }
+      })
+    })
+    if(totalAnswers!==0)
+    {
+      this.score=(goodAnswerCount/totalAnswers)*100
+    }
+    
+  }
+  protected resetQuiz()
+  {
+    this.isSubmitted=false;
+    this.score=0;
+    let answerModel=this.quizQuestions().map((q)=>{
+    return{
+      ...q,
+     answerModel:q.answerModel.map((a)=>
+     {
+      return {
+        ...a,isChecked:false
+      }
+     })
+    }})
+    this.quizQuestions.update(()=>answerModel);
+  }
+    
 }
+

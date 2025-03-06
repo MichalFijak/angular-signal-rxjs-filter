@@ -1,6 +1,13 @@
-<div *ngFor="let question of quizQuestions()">
+<div [ngClass]="{'disable-pointer':isSubmitted}" *ngFor="let question of quizQuestions()">
     {{question.question}}
-    <ul class="button" (click)="getAnswer(question,answer)" *ngFor="let answer of question.answerModel">
+    <ul class="button" [ngClass]="{'isChecked': answer.isChecked,
+    'correct-answer':answer.isCorrect && isSubmitted && answer.isChecked,
+    'wrong-answer':!answer.isCorrect && isSubmitted &&answer.isChecked}" (click)="getAnswer(question,answer)" *ngFor="let answer of question.answerModel">
         {{answer.answer}}
     </ul>
+</div>
+<div class="answer-buttons">
+<span class="button" (click)="submitAnswers()">Submit asnwers</span>
+<span >Your score: {{score | limitDecimal}}%</span>
+<span class="button" (click)="resetQuiz()">Reset quiz</span>
 </div>

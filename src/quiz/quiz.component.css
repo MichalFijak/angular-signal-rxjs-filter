@@ -16,3 +16,24 @@
   .button:hover {
     background-color: #443024;
   }
+  .isChecked{
+    background-color: #803404 !important;
+
+  }
+  .answer-buttons
+  {
+    display:flex;
+    align-items: center;
+  }
+  .correct-answer{
+    background-color: rgb(10, 155, 10) !important;
+
+  }
+  .wrong-answer{
+    background-color: rgb(223, 7, 7) !important;
+
+  }
+  .disable-pointer
+  {
+    pointer-events: none;
+  }
