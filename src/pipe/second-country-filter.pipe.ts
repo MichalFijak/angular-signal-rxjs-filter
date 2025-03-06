@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { first } from 'rxjs';
 
 @Pipe({
   name: 'secondCountryFilter'
@@ -10,19 +11,21 @@ export class SecondCountryFilterPipe implements PipeTransform {
 
   transform(value: string, filter :string): SafeHtml {
 
+    let finalValue="";
     if(!(filter.length>0) ||!filter)
     {
       return value;
     }
-    const lowerCaseValue = value.toLowerCase();
-    const lowerCaseFilter = filter.toLowerCase();
-    const index = lowerCaseValue.indexOf(lowerCaseFilter);
 
-    const beforeMatch = value.substring(0,index);
-    const match = '<strong>'+value.substring(index,index+filter.length)+'</strong>';
-    const afterMatch = value.substring(index+filter.length);
+    let index = value.toLowerCase().indexOf(filter.toLowerCase());
+    let beforeMatch= value.substring(0,index);
+    let match = value.substring(index,filter.length+index);
+    let afterMatch = value.substring(filter.length+index);
 
-    const finalValue = beforeMatch+match+afterMatch;
+    finalValue+=beforeMatch;
+    finalValue+='<strong>'+match+'</strong>';
+    finalValue+=afterMatch;
+
     return this.sanitizer.bypassSecurityTrustHtml(finalValue)
   }
 }
