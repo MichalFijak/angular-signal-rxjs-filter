@@ -16,26 +16,3 @@
   .button:hover {
     background-color: #443024;
   }
-  .checked
-  {
-    background-color:#c9550c;
-  }
-  .correct
-  {
-    background-color:#20a705 !important;
-  }
-  .incorrect
-  {
-    background-color:#a70505 !important;
-  }
-  .disable-quiz{
-    pointer-events: none;
-
-  }
-  .button-allign
-  {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-  }
