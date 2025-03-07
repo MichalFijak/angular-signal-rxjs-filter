@@ -1,8 +1,12 @@
 <h2>Let's exchange your money!</h2>
 <div>Choose your current currency,
     <!-- if user choose one of the option then possibilty options to exchange should show autmotaciallyu -->
-    <select *ngFor="let rate of exchangeRate()">
-        <option>rate</option>
+    <select        
+    [(ngModel)]="selectedCurrency" name="currency"
+    >
+        <option [value]="currency">USD</option>
+        <option [value]="currency">EUR</option>
+        <option [value]="currency">PLN</option>
 
     </select>
 </div>
@@ -10,11 +14,12 @@
 <input placeholder="amount of money"
 >
 <div>Choose currency you want to exchange to
-    <select>
+    <select
+    [(ngModel)]="choosenCurrencyToExchange" name="toExchange">
     >
-        <option>USD</option>
-        <option>EUR</option>
-        <option>PLN</option>
+        <option value="toExchange">USD</option>
+        <option value="toExchange">EUR</option>
+        <option value="toExchange">PLN</option>
     </select>
 </div>
 

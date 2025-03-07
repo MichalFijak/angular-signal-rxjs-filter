@@ -11,16 +11,36 @@ import { CommonModule } from '@angular/common';
 })
 export class CalculatorComponent {
 
+    protected selectedCurrency = signal<string>('USD');
+    protected choosenCurrencyToExchange = signal<string>('EUR');
+
     protected exchangeRate !:Signal<ExchangeRates>
     constructor(private calculatorService:CalculatorService){
     this.exchangeRate=this.calculatorService.getExchangeRate();
     
-    let computedExchangeRate = computed(()=>
+
+    }
+    computedExchangeRate = computed(()=>
     {
-     let rate= this.exchangeRate()
+     const rate= this.exchangeRate()
      
     })
-    }
-
 }
 
+
+// computedExchangeRate = computed(()=>{
+//   const rates = this.exchangeRates();
+
+//   if(this.selectedCurrency() in rates &&
+//    this.selectedCurrencyToExchange() in rates[this.selectedCurrency()])
+//   {
+//     return rates[this.selectedCurrency()][this.selectedCurrencyToExchange()]
+//   }
+//   else{
+//     return 1
+//   }
+// }
+// )
+//        calculatedAmountOfMoney = computed(() => {
+//   return this.computedExchangeRate() * +this.amountOfMoney(); },
+//   );
