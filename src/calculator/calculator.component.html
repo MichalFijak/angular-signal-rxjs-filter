@@ -2,25 +2,25 @@
 <div>Choose your current currency,
     <!-- if user choose one of the option then possibilty options to exchange should show autmotaciallyu -->
     <select        
-    [(ngModel)]="selectedCurrency" name="currency"
+    [(ngModel)]="selectedCurrency"
     >
-        <option [value]="currency">USD</option>
-        <option [value]="currency">EUR</option>
-        <option [value]="currency">PLN</option>
+        <option >USD</option>
+        <option >EUR</option>
+        <option >PLN</option>
 
     </select>
 </div>
-<span>Enter amount: </span>
-<input placeholder="amount of money"
+<span >Enter amount: </span>
+<input [(ngModel)]="amountOfMoney" placeholder="amount of money"
 >
 <div>Choose currency you want to exchange to
     <select
-    [(ngModel)]="choosenCurrencyToExchange" name="toExchange">
+    [(ngModel)]="choosenCurrencyToExchange">
     >
-        <option value="toExchange">USD</option>
-        <option value="toExchange">EUR</option>
-        <option value="toExchange">PLN</option>
+        <option >USD</option>
+        <option>EUR</option>
+        <option >PLN</option>
     </select>
 </div>
 
-<div>Your exchanged money:</div>
+<div>Your exchanged money: {{exchangedMoney()}}</div>

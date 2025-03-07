@@ -13,34 +13,24 @@ export class CalculatorComponent {
 
     protected selectedCurrency = signal<string>('USD');
     protected choosenCurrencyToExchange = signal<string>('EUR');
-
+    protected amountOfMoney = signal<string>('0');
     protected exchangeRate !:Signal<ExchangeRates>
     constructor(private calculatorService:CalculatorService){
     this.exchangeRate=this.calculatorService.getExchangeRate();
-    
-
     }
     computedExchangeRate = computed(()=>
     {
-     const rate= this.exchangeRate()
-     
+     const rates= this.exchangeRate()
+     if(this.selectedCurrency() in rates &&
+        this.choosenCurrencyToExchange() in rates[this.selectedCurrency()])
+        {
+          return rates[this.selectedCurrency()][this.choosenCurrencyToExchange()]
+        }
+        else
+        {
+          return 1;
+        }
     })
+    exchangedMoney=computed(()=>this.computedExchangeRate()* +this.amountOfMoney());
 }
 
-
-// computedExchangeRate = computed(()=>{
-//   const rates = this.exchangeRates();
-
-//   if(this.selectedCurrency() in rates &&
-//    this.selectedCurrencyToExchange() in rates[this.selectedCurrency()])
-//   {
-//     return rates[this.selectedCurrency()][this.selectedCurrencyToExchange()]
-//   }
-//   else{
-//     return 1
-//   }
-// }
-// )
-//        calculatedAmountOfMoney = computed(() => {
-//   return this.computedExchangeRate() * +this.amountOfMoney(); },
-//   );
