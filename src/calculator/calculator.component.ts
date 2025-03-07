@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, Signal, computed, signal } from '@angular/core';
 import {  FormsModule } from '@angular/forms';
 import { CalculatorService, ExchangeRates } from './calculator-service/calculator.service';
 import { CommonModule } from '@angular/common';
@@ -11,13 +11,16 @@ import { CommonModule } from '@angular/common';
 })
 export class CalculatorComponent {
 
-    protected exchangeRate =signal<ExchangeRates>({
-      USD: {
-      PLN: 4.04,
-      EUR: 0.95,
-    }}as ExchangeRates)
+    protected exchangeRate !:Signal<ExchangeRates>
     constructor(private calculatorService:CalculatorService){
+    this.exchangeRate=this.calculatorService.getExchangeRate();
     
+    let computedExchangeRate = computed(()=>
+    {
+     let rate= this.exchangeRate()
+     
+    })
     }
+
 }
 
