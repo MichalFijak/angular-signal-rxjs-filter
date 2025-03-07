@@ -45,7 +45,7 @@ export class MusicShopService
       const exchangedCurrency = this.getEnumValue(newCurrency);
       this.exchangeRate.set(exchangedCurrency);
       this.musicInfosSignal.set(computed(()=>this.musicInfosSignal().map(element => {
-        return {...element, price:element.price = element.price*this.exchangeRate()}
+        return {...element, price:element.price*this.exchangeRate()}
       }))())
     }
 

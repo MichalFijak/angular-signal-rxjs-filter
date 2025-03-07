@@ -1,4 +1,4 @@
-import { Observable, of } from "rxjs";
+import { Observable, of, reduce } from "rxjs";
 import {toSignal} from "@angular/core/rxjs-interop"
 import { Injectable } from "@angular/core";
 @Injectable({providedIn:'root'})
@@ -28,9 +28,10 @@ export class CalculatorService
                                             PLN: 4.04,
                                             EUR: 0.95
                                             }
-                                        }
+                                        } as ExchangeRates
                                     });
       getExchangeRate(){
+        
         return this.exchangeRateToSignal;
       }
 }
