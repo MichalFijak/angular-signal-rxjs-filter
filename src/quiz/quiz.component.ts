@@ -18,7 +18,7 @@ export class QuizComponent {
   protected enableScore=false;
   constructor(private quizService: QuizService)
   {
-    this.quizQuestions.set(this.quizService.getQuestions().quiz);
+    this.quizQuestions.set(this.quizService.getQuestions());
   }
 
   protected choosenAnswer(question:QuizModel,answer:AnswerModel)
@@ -37,7 +37,9 @@ export class QuizComponent {
       return q;
     })
 
-    this.quizQuestions.update(()=>quizModel)
+    this.quizService.updateQuiz(quizModel)
+    this.quizQuestions.set(this.quizService.getQuestions());
+
   }
 
   protected submitAnswers()
@@ -82,7 +84,8 @@ export class QuizComponent {
       }
 
     })
-    this.quizQuestions.update(()=>quizModel)
+    this.quizService.updateQuiz(quizModel)
+    this.quizQuestions.set(this.quizService.getQuestions());
 
   }
 }

@@ -1,20 +1,27 @@
-import { Injectable, Signal, computed } from '@angular/core';
+import { Injectable, Signal, computed, signal } from '@angular/core';
 import { QuizTemplate } from './models/quiz-template';
+import { QuizModel } from './models/quiz-model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  private readonly quiz!: Signal<QuizTemplate>
+  private readonly quiz= signal<QuizModel[]>([])
   constructor() {
-    this.quiz = computed(() => new QuizTemplate);
+    this.quiz.set(new QuizTemplate().quiz);
    }
 
 
    getQuestions()
    {
     return this.quiz();
+   }
+
+   updateQuiz(quizModel:QuizModel[])
+   {
+    this.quiz.update(()=>quizModel);
+
    }
 
 }
