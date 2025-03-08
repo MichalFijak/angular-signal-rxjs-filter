@@ -25,6 +25,11 @@ export const appRoutes:Routes=[
         title:'Quiz!'
     },
     {
+        path:'currency-swapper',
+        loadComponent:()=>import('./currency-swapper/currency-swapper.component').then(c=>c.CurrencySwapperComponent),
+        title:'Curenncy swapper from'
+    },
+    {
         path:'',
         component:EmptyPageComponent,
         title: 'Home!'
