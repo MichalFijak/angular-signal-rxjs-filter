@@ -6,17 +6,12 @@ import { SwapperCurrency } from './swapper-currency/SwapperCurrency';
 })
 export class SwapperService {
 
-private readonly currency = signal<SwapperCurrency>("USD");
 
-
-getCurrency()
+currencyPrice=
 {
-  return this.currency.asReadonly();
-}
-
-setCurrency(currency: SwapperCurrency)
-{
-  this.currency.set(currency);
+  "EUR":1.14,
+  "USD":1,
+  "GBP":1.31
 }
 
 }

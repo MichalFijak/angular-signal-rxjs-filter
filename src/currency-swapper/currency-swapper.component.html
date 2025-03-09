@@ -1,6 +1,6 @@
 <p>currency-swapper works!</p>
-<span>{{currency()}}</span>
-<select [(ngModel)]="switchCurrency" (click)="updateCurrency()">
+<span>PLN</span>
+<select>
     <option>
         USD
     </option>
@@ -12,4 +12,3 @@
     </option>
 </select>
 <hr>
-<span>{{calculatedAmount() | currency:currency()}}</span>

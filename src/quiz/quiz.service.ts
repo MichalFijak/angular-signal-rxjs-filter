@@ -12,16 +12,4 @@ export class QuizService {
     this.quiz.set(new QuizTemplate().quiz);
    }
 
-
-   getQuestions()
-   {
-    return this.quiz;
-   }
-
-   updateQuiz(quizModel:QuizModel[])
-   {
-    this.quiz.update(()=>quizModel);
-
-   }
-
 }
