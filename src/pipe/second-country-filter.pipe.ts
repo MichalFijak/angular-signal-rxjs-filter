@@ -15,7 +15,14 @@ export class SecondCountryFilterPipe implements PipeTransform {
       return value;
     }
 
-    return this.sanitizer.bypassSecurityTrustHtml(value)
+    let index = value.toLowerCase().indexOf(filter.toLowerCase());
+    let before = value.substring(0,index);
+    let match ='<strong>'+ value.substring(index,filter.length+index) +'</strong>'
+    let after = value.substring(filter.length+index);
+
+    let newValue = before+match+after;
+
+    return this.sanitizer.bypassSecurityTrustHtml(newValue)
   }
 }
 
