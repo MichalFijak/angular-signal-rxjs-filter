@@ -1,7 +1,6 @@
 <h2>Let's exchange your money!</h2>
 <div>Choose your current currency
-    <select
-    [(ngModel)]="selectedCurrency">
+    <select>
         <option>USD</option>
         <option>EUR</option>
         <option>PLN</option>
@@ -9,11 +8,9 @@
 </div>
 <span>Enter amount: </span>
 <input placeholder="amount of money"
-[(ngModel)]="amountOfMoney"
 >
 <div>Choose currency you want to exchange to
     <select
-    [(ngModel)]="selectedCurrencyToExchange">
     >
         <option>USD</option>
         <option>EUR</option>
@@ -21,4 +18,4 @@
     </select>
 </div>
 
-<div>Your exchanged money: {{calculatedAmountOfMoney()}}</div>
+<div>Your exchanged money:</div>

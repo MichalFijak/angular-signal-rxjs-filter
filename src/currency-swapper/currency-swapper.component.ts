@@ -23,17 +23,4 @@ export class CurrencySwapperComponent {
     "USD":1,
     "GBP":1.31
   }
-
-  currencyExchange$ : Observable<CurrencyExchange> = of(this.currencyPrice);
-  currencyExchange= toSignal(this.currencyExchange$, {initialValue:{USD:1,EUR:1,GBP:1}});
-
-  service = inject(SwapperService);
-  currency = this.service.getCurrency();
-  switchCurrency = signal<SwapperCurrency>('EUR');
-  amount = signal<number>(20);
-  updateCurrency()
-  {
-  this.service.setCurrency(this.switchCurrency())
-  }
-  calculatedAmount=computed(()=>this.amount()*this.currencyExchange()[this.switchCurrency()])
 }
