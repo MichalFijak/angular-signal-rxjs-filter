@@ -14,16 +14,8 @@ export class SecondCountryFilterPipe implements PipeTransform {
     {
       return value;
     }
-    const lowerCaseValue = value.toLowerCase();
-    const lowerCaseFilter = filter.toLowerCase();
-    const index = lowerCaseValue.indexOf(lowerCaseFilter);
 
-    const beforeMatch = value.substring(0,index);
-    const match = '<strong>'+value.substring(index,index+filter.length)+'</strong>';
-    const afterMatch = value.substring(index+filter.length);
-
-    const finalValue = beforeMatch+match+afterMatch;
-    return this.sanitizer.bypassSecurityTrustHtml(finalValue)
+    return this.sanitizer.bypassSecurityTrustHtml(value)
   }
 }
 

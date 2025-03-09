@@ -1,17 +1,9 @@
-<ul
- [ngClass]="{'disable-quiz':enableScore}"
- *ngFor="let question of quizQuestions()">
-    {{question.question}}
-    <span class="button" [ngClass]="{'checked':answer.isChecked,
-    'correct': answer.isChecked && answer.isCorrect && enableScore,
-    'incorrect':answer.isChecked && !answer.isCorrect && enableScore}"
-    *ngFor="let answer of question.answerModel"
-     (click)="choosenAnswer(question,answer)">
-        {{answer.answer}}
+<ul>
+    <span class="button">
     </span>
 </ul>
 <div class="button-allign">
-<span class="button" (click)="submitAnswers()">Submit asnwers</span>
-<span>{{score |limitDecimal}}%</span>
-<span class="button" [ngClass]="{'disable-quiz':!enableScore}" (click)="resetQuiz()">Reset quiz</span>
+<span class="button">Submit asnwers</span>
+<span>%</span>
+<span class="button">Reset quiz</span>
 </div>
