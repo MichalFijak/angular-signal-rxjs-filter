@@ -1,9 +1,16 @@
-<ul>
-    <span class="button">
+<ul *ngFor="let quiz of quizModel()"
+ [ngClass]="{'disable-quiz':isSubmitted}">
+    {{quiz.question}}
+        <span class="button" *ngFor="let answer of quiz.answerModel"
+         (click)="chooseAnswer(quiz,answer)"
+          [ngClass]="{'checked':answer.isChecked,
+          'correct':answer.isCorrect&&answer.isChecked&&isSubmitted,
+          'incorrect':!answer.isCorrect&&answer.isChecked&&isSubmitted}">
+         {{answer.answer}}
     </span>
 </ul>
 <div class="button-allign">
-<span class="button">Submit asnwers</span>
-<span>%</span>
-<span class="button">Reset quiz</span>
+<span class="button" (click)="submitAnswers()">Submit asnwers</span>
+<span>{{totalScore() | limitDecimal}}%</span>
+<span class="button" (click)="resetAnswers()">Reset quiz</span>
 </div>
