@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { QuizService } from './quiz.service';
 import { CommonModule } from '@angular/common';
 import { QuizModel } from './models/quiz-model';
@@ -13,13 +13,11 @@ import { LimitDecimalPipe } from '../pipe/limit-decimal.pipe';
 })
 export class QuizComponent {
 
-  protected readonly quizQuestions= signal<QuizModel[]>([{question:'',answerModel:[],questionId:0}]);
   protected score=0;
   protected enableScore=false;
-  constructor(private quizService: QuizService)
-  {
-    this.quizQuestions.set(this.quizService.getQuestions());
-  }
+  quizSerivce = inject(QuizService);
+  quizQuestions = this.quizSerivce.getQuestions();
+
 
   protected choosenAnswer(question:QuizModel,answer:AnswerModel)
   {    
@@ -37,8 +35,7 @@ export class QuizComponent {
       return q;
     })
 
-    this.quizService.updateQuiz(quizModel)
-    this.quizQuestions.set(this.quizService.getQuestions());
+    this.quizSerivce.updateQuiz(quizModel)
 
   }
 
@@ -84,8 +81,7 @@ export class QuizComponent {
       }
 
     })
-    this.quizService.updateQuiz(quizModel)
-    this.quizQuestions.set(this.quizService.getQuestions());
+    this.quizSerivce.updateQuiz(quizModel)
 
   }
 }

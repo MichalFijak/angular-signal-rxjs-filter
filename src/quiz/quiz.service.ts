@@ -15,7 +15,7 @@ export class QuizService {
 
    getQuestions()
    {
-    return this.quiz();
+    return this.quiz;
    }
 
    updateQuiz(quizModel:QuizModel[])
