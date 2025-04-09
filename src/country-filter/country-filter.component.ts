@@ -2,13 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit, computed, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CountryService } from './country-service/countryService';
-import { Subscription, filter, map, tap } from 'rxjs';
-import { CountryFormatterPipe } from '../pipe/country-formatter.pipe';
+import { Subscription,map} from 'rxjs';
 import { SecondCountryFilterPipe } from '../pipe/second-country-filter.pipe';
 
 @Component({
   selector: 'app-country-filter',
-  imports: [CommonModule, FormsModule,CountryFormatterPipe,SecondCountryFilterPipe],
+  imports: [CommonModule, FormsModule, SecondCountryFilterPipe],
   templateUrl: './country-filter.component.html',
   styleUrl: './country-filter.component.css'
 })
