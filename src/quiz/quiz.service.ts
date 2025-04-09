@@ -20,7 +20,7 @@ export class QuizService {
 
    updateQuiz(quizModel:QuizModel[])
    {
-    this.quiz.update(()=>quizModel);
+    this.quiz.set(quizModel);
 
    }
 
